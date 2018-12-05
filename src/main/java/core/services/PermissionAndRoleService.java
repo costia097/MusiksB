@@ -17,6 +17,7 @@ import static core.enums.PermissionNames.READ_PERMISSION_NAME;
 import static core.enums.PermissionNames.WATCH_PERMISSION_NAME;
 import static core.enums.PermissionNames.WRITE_PERMISSION_NAME;
 import static core.enums.RoleNames.ROLE_INACTIVE;
+import static core.enums.RoleNames.ROLE_USER;
 
 @Service
 public class PermissionAndRoleService {
@@ -42,11 +43,11 @@ public class PermissionAndRoleService {
         );
     }
 
-    public Tuple2<List<Permission>, List<Role>> resolvePermissionsAndRolesForActiveUser() {
+    Tuple2<List<Permission>, List<Role>> resolvePermissionsAndRolesForActiveUser() {
         return Tuple.of(
                 permissionRepository.findByNames(permissionsForActiveUser)
                         .getOrElse(Collections.emptyList()),
-                roleRepository.findByNames(permissionsForActiveUser)
+                roleRepository.findByNames(Collections.singletonList(ROLE_USER.name()))
                         .getOrElse(Collections.emptyList()));
     }
 

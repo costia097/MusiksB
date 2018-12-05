@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 @SuppressWarnings("unchecked")
 public class UserRepository {
@@ -26,6 +28,24 @@ public class UserRepository {
         Query query = currentSession.createQuery("FROM User WHERE login = :login");
         query.setParameter("login", login);
         return Option.of((User) query.uniqueResult());
+    }
+
+    public Option<User> findByEmail(String email) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery("FROM User WHERE login = :email");
+        query.setParameter("email", email);
+        return Option.of((User) query.uniqueResult());
+    }
+
+    public Option<User> findByUuid(UUID uuid) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery("FROM User WHERE uuid = :uuid");
+        query.setParameter("uuid", uuid);
+        return Option.of((User) query.uniqueResult());
+    }
+
+    public void update(User user) {
+        sessionFactory.getCurrentSession().update(user);
     }
 
     public void save(User user) {

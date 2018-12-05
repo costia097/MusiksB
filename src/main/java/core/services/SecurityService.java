@@ -26,17 +26,23 @@ import static core.convertors.UserConvertor.convertToUserEntityFromSignUpRequest
 
 @Service
 public class SecurityService {
+    private static final String CONFIRM_REGISTRATION = "Confirm registration";
+    private static final String HELLO_MESSAGE = "Hello, dear ";
+    private static final String YOUR_LINK_MESSAGE = " Your link is:";
+    private static final String CONFIRM_USER_LINK = "http://localhost:4200/signUp/confirm?param=";
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private PermissionAndRoleService permissionAndRoleService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public void signUpUser(SignUpRequestModel model) throws BadRequestException {
-        if (isUserWithGivenLoginExist(model.getLogin())) {
-            throw new BadRequestException("User with given login is already exist");
+        if (isUserWithGivenLoginOrEmailExist(model.getLogin(), model.getEmail())) {
+            throw new BadRequestException("User with given login or email is already exist");
         }
 
         User entityUser = convertToUserEntityFromSignUpRequestModel(model);
@@ -49,6 +55,12 @@ public class SecurityService {
         addressService.addAddressToUserEntity(entityUser, model.getAddressLine(), model.getCountry());
 
         userRepository.save(entityUser);
+
+        emailService.sendEmailToPerson(
+                model.getEmail(),
+                CONFIRM_REGISTRATION,
+                HELLO_MESSAGE + model.getFirstName() + YOUR_LINK_MESSAGE + CONFIRM_USER_LINK + entityUser.getUuid()
+        );
     }
 
     @Transactional
@@ -103,7 +115,7 @@ public class SecurityService {
         context.setAuthentication(authenticationToken);
     }
 
-    private boolean isUserWithGivenLoginExist(String login) {
-        return userRepository.findByLogin(login).getOrNull() != null;
+    private boolean isUserWithGivenLoginOrEmailExist(String login, String email) {
+        return userRepository.findByLogin(login).getOrNull() != null || userRepository.findByEmail(email).getOrNull() != null;
     }
 }
