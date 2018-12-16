@@ -7,6 +7,8 @@
     <bytecodeTargetLevel>
       <module name="musiks_main" target="1.8" />
       <module name="musiks_test" target="1.8" />
+      <module name="net.musiks.main" target="1.8" />
+      <module name="net.musiks.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
