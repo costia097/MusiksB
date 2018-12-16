@@ -33,6 +33,8 @@ jobs:
 
       - run: gradle dependencies
 
+      - run: gradle bootJar
+
       - save_cache:
           paths:
             - ~/.gradle
