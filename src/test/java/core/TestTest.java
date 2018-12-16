@@ -1,4 +1,4 @@
-package net;
+package core;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,5 @@ public class TestTest {
 
     @Test
     public void test() {
-        System.out.println("A");
     }
 }
