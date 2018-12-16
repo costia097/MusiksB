@@ -16,7 +16,3 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.1.RELEASE'
     compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.4'
 }
-
-
-test {
-}
