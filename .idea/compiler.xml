@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="net-core_main" target="1.8" />
+      <module name="net-core_test" target="1.8" />
+      <module name="net-musiks_main" target="1.8" />
+      <module name="net-musiks_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
